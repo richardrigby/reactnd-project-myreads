@@ -4,7 +4,7 @@ import * as BooksAPI from '../BooksAPI'
 
 class SearchBooksBar extends React.Component {
   render() {
-    BooksAPI.getAll().then(data => console.log(data));
+    BooksAPI.getAll().then(data => console.log(JSON.stringify(data)));
     return (
       <div className="search-books">
         <div className="search-books-bar">
