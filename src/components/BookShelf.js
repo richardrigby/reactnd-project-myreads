@@ -7,11 +7,14 @@ class BookShelf extends React.Component {
     const bookList = books.map((book) =>
       <li key={book.id}>
         <Book
+          bookId={book.id}
+          shelfId={this.props.shelfId}
           backgroundImage={`url('${book.imageLinks.thumbnail}')`}
           width={128}
           height={193}
           bookTitle={book.title}
           bookAuthors={book.authors.join(', ')}
+          onMoveBook={this.props.onMoveBook}
         />
       </li>
     );

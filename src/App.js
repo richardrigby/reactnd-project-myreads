@@ -17,6 +17,7 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then(data => {
+      // console.log(data);
       books = data;
       let wantToReadBooks = books.filter(book => {
         return book.shelf === "wantToRead"
@@ -32,6 +33,10 @@ class BooksApp extends React.Component {
     }); 
   }
 
+  moveBook = (book, from, to) => {
+    console.log(`move book ${book} from: ${from}, to: ${to}`)
+  }
+
   render() {
     return (
       <div className="app">
@@ -43,9 +48,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <BookShelf title="Currently Reading" books={this.state.currentlyReadingBooks}/>
-                <BookShelf title="Want to Read" books={this.state.wantToReadBooks}/>
-                <BookShelf title="Read" books={this.state.readBooks}/>
+                <BookShelf title="Currently Reading" shelfId="currentlyReading" books={this.state.currentlyReadingBooks} onMoveBook={this.moveBook}/>
+                <BookShelf title="Want to Read" shelfId="wantToRead" books={this.state.wantToReadBooks} onMoveBook={this.moveBook}/>
+                <BookShelf title="Read" shelfId="read" books={this.state.readBooks} onMoveBook={this.moveBook}/>
               </div>
             </div>
             <OpenSearchButton />
