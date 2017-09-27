@@ -5,7 +5,7 @@ class Book extends React.Component {
     shelf: ""
   }
   moveBook = (event) => {
-    this.props.onMoveBook(this.props.bookID, this.props.shelfId, event.target.value)
+    this.props.onMoveBook(this.props.bookID, event.target.value)
   };
 
   componentDidMount() {
