@@ -7,8 +7,8 @@ class BookShelf extends React.Component {
     const bookList = books.map((book) =>
       <li key={book.id}>
         <Book
-          bookId={book.id}
-          shelfId={this.props.shelfId}
+          bookID={book.id}
+          shelfID={this.props.shelfID}
           backgroundImage={`url('${book.imageLinks.thumbnail}')`}
           width={128}
           height={193}

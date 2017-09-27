@@ -6,36 +6,119 @@ import BookShelf from './components/BookShelf'
 import { Route } from 'react-router-dom'
 import './App.css'
 
-let books = [];
+// let books = [];
 
 class BooksApp extends React.Component {
   state = {
-    wantToReadBooks: [],
-    currentlyReadingBooks: [],
-    readBooks: []
+    books: {
+      wantToRead: [],
+      currentlyReading: [],
+      read: []
+    }
+    // wantToReadBooks: [],
+    // currentlyReadingBooks: [],
+    // readBooks: []
   };
 
   componentDidMount() {
+    this.getAllBooks();
+  }
+
+  getAllBooks = () => {
     BooksAPI.getAll().then(data => {
       // console.log(data);
-      books = data;
-      let wantToReadBooks = books.filter(book => {
+      let wantToRead = data.filter(book => {
         return book.shelf === "wantToRead"
       });
-      let currentlyReadingBooks = books.filter(book => {
+      let currentlyReading = data.filter(book => {
         return book.shelf === "currentlyReading"
       });
-      let readBooks = books.filter(book => {
+      let read = data.filter(book => {
         return book.shelf === "read"
       });
 
-      this.setState({ wantToReadBooks, currentlyReadingBooks, readBooks});
-    }); 
-  }
+      let books = { wantToRead, currentlyReading, read };
 
-  moveBook = (book, from, to) => {
-    console.log(`move book ${book} from: ${from}, to: ${to}`)
-  }
+      this.setState({ books });
+    }); 
+  };
+
+  // setBooksAndState = (data) => {
+  //   books = data;
+  //   let wantToReadBooks = books.filter(book => {
+  //     return book.shelf === "wantToRead"
+  //   });
+  //   let currentlyReadingBooks = books.filter(book => {
+  //     return book.shelf === "currentlyReading"
+  //   });
+  //   let readBooks = books.filter(book => {
+  //     return book.shelf === "read"
+  //   });
+
+  //   this.setState({ wantToReadBooks, currentlyReadingBooks, readBooks});
+  // };
+
+  moveBook = (bookID, from, to) => {
+    // console.log(`move book ${bookID} from: ${from}, to: ${to}`);
+    // let fromShelf = this.findShelf(from);
+    // let toShelf = this.findShelf(to);
+
+    // if (fromShelf === null) {
+    //   console.log("Error finding from shelf")
+    // }
+
+    // if (toShelf === null) {
+    //   console.log("Error finding to shelf")
+    // }
+
+    // console.log(fromShelf)
+    // console.log(toShelf)
+
+    let book = { id: bookID };
+    BooksAPI.update(book, to).then(data => {
+      // console.log(bookID);
+      // console.log(data);
+
+      // let wantToRead = data.wantToRead.map((responseBook) => { 
+      //   return this.state.books.wantToRead.filter((stateBook) => {
+      //     // console.log(`responseBook:${responseBook}, stateBook.id:${stateBook.id}`)
+      //     return stateBook.id === responseBook;
+      //   })[0];
+      // });
+
+      // let currentlyReading = data.currentlyReading.map((responseBook) => { 
+      //   return this.state.books.currentlyReading.filter((stateBook) => {
+      //     // console.log(`responseBook:${responseBook}, stateBook.id:${stateBook.id}`)
+      //     return stateBook.id === responseBook;
+      //   })[0];
+      // });
+
+      // let read = data.read.map((responseBook) => { 
+      //   return this.state.books.read.filter((stateBook) => {
+      //     // console.log(`responseBook:${responseBook}, stateBook.id:${stateBook.id}`)
+      //     return stateBook.id === responseBook;
+      //   })[0];
+      // });
+
+      // let books = { wantToRead, currentlyReading, read };
+      // console.log(books)
+      // this.setState({ books });
+      this.getAllBooks();
+    });
+  };
+
+  // findShelf = (shelfId) => {
+  //   switch(shelfId) {
+  //     case "wantToRead":
+  //         return this.state.wantToReadBooks;
+  //     case "currentlyReading":
+  //         return this.state.currentlyReadingBooks;
+  //     case "read":
+  //         return this.state.readBooks;
+  //     default:
+  //       return null
+  //   }
+  // }
 
   render() {
     return (
@@ -48,9 +131,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <BookShelf title="Currently Reading" shelfId="currentlyReading" books={this.state.currentlyReadingBooks} onMoveBook={this.moveBook}/>
-                <BookShelf title="Want to Read" shelfId="wantToRead" books={this.state.wantToReadBooks} onMoveBook={this.moveBook}/>
-                <BookShelf title="Read" shelfId="read" books={this.state.readBooks} onMoveBook={this.moveBook}/>
+                <BookShelf title="Currently Reading" shelfID="currentlyReading" books={this.state.books.currentlyReading} onMoveBook={this.moveBook}/>
+                <BookShelf title="Want to Read" shelfID="wantToRead" books={this.state.books.wantToRead} onMoveBook={this.moveBook}/>
+                <BookShelf title="Read" shelfID="read" books={this.state.books.read} onMoveBook={this.moveBook}/>
               </div>
             </div>
             <OpenSearchButton />
