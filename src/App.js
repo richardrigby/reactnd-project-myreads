@@ -47,7 +47,10 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path="/search" component={SearchBooksBar}/>
+        <Route path="/search" render={() => (
+          <SearchBooksBar onMoveBook={this.moveBook} />
+        )}/>
+
         <Route exact path="/" render={() => (
           <div className="list-books">
             <div className="list-books-title">

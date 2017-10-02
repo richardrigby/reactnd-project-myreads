@@ -4,30 +4,39 @@ import Book from './Book'
 class BookShelf extends React.Component {
   render() {
     const books = this.props.books;
-    const bookList = books.map((book) =>
-      <li key={book.id}>
-        <Book
-          bookID={book.id}
-          shelfID={this.props.shelfID}
-          backgroundImage={`url('${book.imageLinks.thumbnail}')`}
-          width={128}
-          height={193}
-          bookTitle={book.title}
-          bookAuthors={book.authors.join(', ')}
-          onMoveBook={this.props.onMoveBook}
-        />
-      </li>
-    );
-    return (
-      <div className="bookshelf">
-        <h2 className="bookshelf-title">{this.props.title}</h2>
-        <div className="bookshelf-books">
-          <ol className="books-grid">
-            {bookList}
-          </ol>
+
+    console.log(books)
+
+    if (books.error === "empty query") {
+      return (
+      <div>No match found</div>
+    )
+    } else {
+      const bookList = books.map((book) =>
+        <li key={book.id}>
+          <Book
+            bookID={book.id}
+            shelfID={this.props.shelfID}
+            backgroundImage={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail === undefined ? "" :`url('${book.imageLinks.thumbnail}')`}
+            width={128}
+            height={193}
+            bookTitle={book.title === undefined ? "" : book.title}
+            bookAuthors={book.authors === undefined ? "" : book.authors.join(', ')}
+            onMoveBook={this.props.onMoveBook}
+          />
+        </li>
+      );
+      return (
+        <div className="bookshelf">
+          <h2 className="bookshelf-title">{this.props.title}</h2>
+          <div className="bookshelf-books">
+            <ol className="books-grid">
+              {bookList}
+            </ol>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 };
 
