@@ -5,8 +5,6 @@ class BookShelf extends React.Component {
   render() {
     const books = this.props.books;
 
-    console.log(books)
-
     if (books.error === "empty query") {
       return (
       <div>No match found</div>

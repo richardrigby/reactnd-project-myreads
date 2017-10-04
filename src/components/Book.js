@@ -5,7 +5,8 @@ class Book extends React.Component {
     shelf: ""
   }
   moveBook = (event) => {
-    this.props.onMoveBook(this.props.bookID, event.target.value)
+    let shelfName = event.target.options[event.target.selectedIndex].text;
+    this.props.onMoveBook(this.props.bookID, this.props.bookTitle, event.target.value, shelfName);
   };
 
   componentDidMount() {

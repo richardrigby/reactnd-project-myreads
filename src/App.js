@@ -5,6 +5,8 @@ import OpenSearchButton from './components/OpenSearchButton'
 import BookShelf from './components/BookShelf'
 import { Route } from 'react-router-dom'
 import './App.css'
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class BooksApp extends React.Component {
   state = {
@@ -37,11 +39,13 @@ class BooksApp extends React.Component {
     }); 
   };
 
-  moveBook = (bookID, to) => {
+  moveBook = (bookID, bookTitle, toID, toName) => {
     let book = { id: bookID };
-    BooksAPI.update(book, to).then(data => {
-      this.getAllBooks();
-    });
+    BooksAPI.update(book, toID).then(data => {
+      this.getAllBooks()
+    }).then(() => {
+      NotificationManager.success(`${bookTitle} moved to ${toName}`, 'Success!');
+    });;
   };
 
   render() {
@@ -66,6 +70,7 @@ class BooksApp extends React.Component {
             <OpenSearchButton />
           </div>
         )}/>
+        <NotificationContainer/>
       </div>
     )
   }
