@@ -44,7 +44,7 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, toID).then(data => {
       this.getAllBooks()
     }).then(() => {
-      NotificationManager.success(`${bookTitle} moved to ${toName}`, 'Success!');
+      NotificationManager.success(`'${bookTitle}' moved to '${toName}'`, 'Success!');
     });;
   };
 
