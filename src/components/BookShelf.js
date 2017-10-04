@@ -17,9 +17,7 @@ class BookShelf extends React.Component {
           <Book
             bookID={book.id}
             shelfID={this.props.shelfID}
-            backgroundImage={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail === undefined ? "" :`url('${book.imageLinks.thumbnail}')`}
-            width={128}
-            height={193}
+            backgroundImage={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail === undefined ? "" : book.imageLinks.thumbnail }
             bookTitle={book.title === undefined ? "" : book.title}
             bookAuthors={book.authors === undefined ? "" : book.authors.join(', ')}
             onMoveBook={this.props.onMoveBook}

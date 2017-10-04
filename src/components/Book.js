@@ -16,7 +16,10 @@ class Book extends React.Component {
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ width: this.props.width, height: this.props.height, backgroundImage: this.props.backgroundImage }}></div>
+            <img className="book-cover"
+              src={this.props.backgroundImage} 
+              style={{ maxHeight: 200, width: "auto", height: "auto" }} 
+              alt="book cover"/>
           <div className="book-shelf-changer">
             <select onChange={this.moveBook} value={this.state.shelf}>
               <option value="none" disabled>Move to...</option>
