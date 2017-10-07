@@ -7,14 +7,18 @@ class BookShelf extends React.Component {
 
     if (books.error === "empty query") {
       return (
-      <div>No match found</div>
-    )
+        <div>No match found</div>
+      )
+    } else if (books.length === 0) {
+      return (
+        <div></div>
+      )
     } else {
       const bookList = books.map((book) =>
         <li key={book.id}>
           <Book
             bookID={book.id}
-            shelfID={this.props.shelfID}
+            shelf={book.shelf === undefined ? "" : book.shelf}
             backgroundImage={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail === undefined ? "" : book.imageLinks.thumbnail }
             bookTitle={book.title === undefined ? "" : book.title}
             bookAuthors={book.authors === undefined ? "" : book.authors.join(', ')}

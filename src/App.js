@@ -10,11 +10,7 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class BooksApp extends React.Component {
   state = {
-    books: {
-      wantToRead: [],
-      currentlyReading: [],
-      read: []
-    }
+    books: []
   };
 
   componentDidMount() {
@@ -22,37 +18,29 @@ class BooksApp extends React.Component {
   }
 
   getAllBooks = () => {
-    BooksAPI.getAll().then(data => {
-      let wantToRead = data.filter(book => {
-        return book.shelf === "wantToRead"
-      });
-      let currentlyReading = data.filter(book => {
-        return book.shelf === "currentlyReading"
-      });
-      let read = data.filter(book => {
-        return book.shelf === "read"
-      });
-
-      let books = { wantToRead, currentlyReading, read };
-
+    BooksAPI.getAll().then(books => {
       this.setState({ books });
     }); 
   };
 
-  moveBook = (bookID, bookTitle, toID, toName) => {
+  moveBook = (bookID, bookTitle, shelfID, shelf) => {
     let book = { id: bookID };
-    BooksAPI.update(book, toID).then(data => {
+    BooksAPI.update(book, shelfID).then(data => {
       this.getAllBooks()
     }).then(() => {
-      NotificationManager.success(`'${bookTitle}' moved to '${toName}'`, 'Success!');
+      NotificationManager.success(`'${bookTitle}' moved to '${shelf}'`, 'Success!');
     });;
   };
 
   render() {
+    const wantToRead = this.state.books.filter(book => book.shelf === 'wantToRead')
+    const currentlyReading = this.state.books.filter(book => book.shelf === 'currentlyReading')
+    const read = this.state.books.filter(book => book.shelf === 'read')
+
     return (
       <div className="app">
         <Route path="/search" render={() => (
-          <SearchBooksBar onMoveBook={this.moveBook} />
+          <SearchBooksBar onMoveBook={this.moveBook} shelfBooks={this.state.books} />
         )}/>
 
         <Route exact path="/" render={() => (
@@ -62,9 +50,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <BookShelf title="Currently Reading" shelfID="currentlyReading" books={this.state.books.currentlyReading} onMoveBook={this.moveBook}/>
-                <BookShelf title="Want to Read" shelfID="wantToRead" books={this.state.books.wantToRead} onMoveBook={this.moveBook}/>
-                <BookShelf title="Read" shelfID="read" books={this.state.books.read} onMoveBook={this.moveBook}/>
+                <BookShelf title="Currently Reading" shelfID="currentlyReading" books={currentlyReading} onMoveBook={this.moveBook}/>
+                <BookShelf title="Want to Read" shelfID="wantToRead" books={wantToRead} onMoveBook={this.moveBook}/>
+                <BookShelf title="Read" shelfID="read" books={read} onMoveBook={this.moveBook}/>
               </div>
             </div>
             <OpenSearchButton />

@@ -1,17 +1,11 @@
 import React from 'react'
 
 class Book extends React.Component {
-  state = {
-    shelf: ""
-  }
+
   moveBook = (event) => {
     let shelfName = event.target.options[event.target.selectedIndex].text;
     this.props.onMoveBook(this.props.bookID, this.props.bookTitle, event.target.value, shelfName);
   };
-
-  componentDidMount() {
-    this.setState({ shelf: this.props.shelfID})
-  }
 
   render() {
     return (
@@ -22,7 +16,7 @@ class Book extends React.Component {
               style={{ maxHeight: 200, width: "auto", height: "auto" }} 
               alt="book cover"/>
           <div className="book-shelf-changer">
-            <select onChange={this.moveBook} value={this.state.shelf}>
+            <select onChange={this.moveBook} value={this.props.shelf}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
