@@ -17,7 +17,7 @@ class Book extends React.Component {
               style={{ maxHeight: 200, width: "auto", height: "auto" }} 
               alt="book cover"/>
           <div className="book-shelf-changer">
-            <select onChange={this.moveBook} value={book.shelf === undefined ? "" : book.shelf}>
+            <select onChange={this.moveBook} value={book.shelf === undefined ? "none" : book.shelf}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
