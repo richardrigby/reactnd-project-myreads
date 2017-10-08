@@ -4,19 +4,20 @@ class Book extends React.Component {
 
   moveBook = (event) => {
     let shelfName = event.target.options[event.target.selectedIndex].text;
-    this.props.onMoveBook(this.props.bookID, this.props.bookTitle, event.target.value, shelfName);
+    this.props.onMoveBook(this.props.book, event.target.value, shelfName);
   };
 
   render() {
+    let book = this.props.book;
     return (
       <div className="book">
         <div className="book-top">
             <img className="book-cover"
-              src={this.props.backgroundImage} 
+              src={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail === undefined ? "" : book.imageLinks.thumbnail} 
               style={{ maxHeight: 200, width: "auto", height: "auto" }} 
               alt="book cover"/>
           <div className="book-shelf-changer">
-            <select onChange={this.moveBook} value={this.props.shelf}>
+            <select onChange={this.moveBook} value={book.shelf === undefined ? "" : book.shelf}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
@@ -25,8 +26,8 @@ class Book extends React.Component {
             </select>
           </div>
         </div>
-        <div className="book-title">{this.props.bookTitle}</div>
-        <div className="book-authors">{this.props.bookAuthors}</div>
+        <div className="book-title">{book.title === undefined ? "" : book.title}</div>
+        <div className="book-authors">{book.authors === undefined ? "" : book.authors.join(', ')}</div>
       </div>
     );
   }

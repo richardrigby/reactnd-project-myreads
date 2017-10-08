@@ -16,14 +16,7 @@ class BookShelf extends React.Component {
     } else {
       const bookList = books.map((book) =>
         <li key={book.id}>
-          <Book
-            bookID={book.id}
-            shelf={book.shelf === undefined ? "" : book.shelf}
-            backgroundImage={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail === undefined ? "" : book.imageLinks.thumbnail }
-            bookTitle={book.title === undefined ? "" : book.title}
-            bookAuthors={book.authors === undefined ? "" : book.authors.join(', ')}
-            onMoveBook={this.props.onMoveBook}
-          />
+          <Book book={book} onMoveBook={this.props.onMoveBook} />
         </li>
       );
       return (

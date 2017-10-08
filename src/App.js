@@ -23,13 +23,19 @@ class BooksApp extends React.Component {
     }); 
   };
 
-  moveBook = (bookID, bookTitle, shelfID, shelf) => {
-    let book = { id: bookID };
-    BooksAPI.update(book, shelfID).then(data => {
-      this.getAllBooks()
-    }).then(() => {
-      NotificationManager.success(`'${bookTitle}' moved to '${shelf}'`, 'Success!');
-    });;
+  moveBook = (book, shelf, shelfName) => {
+    if (book.shelf !== shelf) {
+      BooksAPI.update(book, shelf).then(data => {
+        book.shelf = shelf;
+        this.setState(previousState => {
+          let books = previousState.books.filter(b => b.id !== book.id);
+          books.push(book);
+          return { books };
+        })
+      }).then(() => {
+        NotificationManager.success(`'${book.title}' moved to '${shelfName}'`, 'Success!');
+      });
+    }
   };
 
   render() {
