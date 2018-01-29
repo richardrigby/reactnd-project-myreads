@@ -1,5 +1,7 @@
 # MyReads Project
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/richardrigby/reactnd-project-myreads?branch=master)](https://bettercodehub.com/)
+
 This is the final assessment project for Udacity's React Fundamentals course. 
 
 It is a bookshelf app that allows the user to select and categorize books they have read, are currently reading, or want to read. The project emphasizes using React to build the application and utilises an API server and client library provided by Udacity to persist information as the user interacts with the application.
